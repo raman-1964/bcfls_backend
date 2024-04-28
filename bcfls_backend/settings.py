@@ -76,12 +76,20 @@ WSGI_APPLICATION = 'bcfls_backend.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'bcfls',
+    #     'USER': 'root',
+    #     'PASSWORD': 'raman@123',
+    #     'HOST':  'localhost',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'bcfls',
-        'USER': 'root',
-        'PASSWORD': 'raman@123',
-        'HOST':  'localhost',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': '127.0.0.1',
+        'PORT': '',
     }
 }
 
