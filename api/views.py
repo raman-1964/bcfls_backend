@@ -9,11 +9,10 @@ from rest_framework import status
 
 
 # Create your views here.
-
 class BannerViewSet(APIView):
     def get(self, request):
         item = Banner.objects.all()
-        serializer = BannerSerializer(item)
+        serializer = BannerSerializer(item, context={'request':request} ,many=True)
         return Response({"status":"success","data":serializer.data})
 
 class UserViewSet(APIView):
@@ -26,12 +25,28 @@ class NewsEventsViewSet(APIView):
     def get(self, request, id=None):
         if id :
             item = NewsEvents.objects.get(id=id)
-            serializer = NewsEventsSerializer(item)
+            serializer = NewsEventsSerializer(item, context={'request':request} ,many=True)
             return Response({"status":"success","data":serializer.data})
         else :
-            item = NewsEvents.objects.all()
-            serializer = NewsEventsSerializer(item)
-            return Response({"status":"success","data":serializer.data})
+            if 'is_home_page' in request.query_params:
+                if request.query_params['is_home_page'].lower() == 'true':
+                    try:
+                        item = NewsEvents.objects.get(is_home_page=True)
+                        serializer = NewsEventsSerializer(item, context={'request': request}, many=False)
+                        return Response({"status": "success", "data": serializer.data})
+                    except NewsEvents.DoesNotExist:
+                        return Response({"status": "error", "message": "No NewsEvent with is_home_page=True found"})
+                # else :
+                #     try:
+                #         item = NewsEvents.objects.get(is_home_page=False)
+                #         serializer = NewsEventsSerializer(item, context={'request': request}, many=False)
+                #         return Response({"status": "success", "data": serializer.data})
+                #     except NewsEvents.DoesNotExist:
+                #         return Response({"status": "error", "message": "No NewsEvent with is_home_page=False found"})
+            else:
+                item = NewsEvents.objects.all()
+                serializer = NewsEventsSerializer(item, context={'request': request}, many=True)
+                return Response({"status": "success", "data": serializer.data})
 
 class OpportunitiesViewSet(APIView):
     def post(self, request):
@@ -39,12 +54,20 @@ class OpportunitiesViewSet(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response({"status":"success","data":serializer.data})
-
         else :
             return Response({"status":"error","data":serializer.errors})
 
 class GalleryViewSet(APIView):
     def get(self, request):
-        item = Gallery.objects.all()
-        serializer = GallerySerializer(item)
-        return Response({"status":"success","data":serializer.data})
+        if 'is_home_page' in request.query_params:
+            if request.query_params['is_home_page'].lower() == 'true':
+                try:
+                    item = Gallery.objects.get(is_home_page=True)
+                    serializer = GallerySerializer(item, context={'request': request}, many=False)
+                    return Response({"status": "success", "data": serializer.data})
+                except Gallery.DoesNotExist:
+                    return Response({"status": "error", "message": "No Gallery with is_home_page=True found"})
+        else:
+            item = Gallery.objects.all()
+            serializer = GallerySerializer(item, context={'request':request} ,many=True)
+            return Response({"status":"success","data":serializer.data})
