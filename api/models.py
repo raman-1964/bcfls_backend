@@ -30,9 +30,9 @@ class NewsEvents(models.Model):
         max_length=7, choices=MODE_CHOICES, default=MODE_OFFLINE)
     venue = models.CharField(max_length=500)
     is_home_page = models.BooleanField(default=False)
-    keynoteSpeaker = models.ForeignKey(User, on_delete=models.CASCADE, related_name='keynoteSpeaker')
-    programCoordinator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='programCoordinator')
-    chairPerson = models.ForeignKey(User, on_delete=models.CASCADE, related_name='chairPerson')
+    keynoteSpeaker = models.ManyToManyField(User, related_name='keynoteSpeaker', default=None,null=True, blank=True)
+    chairPerson = models.ManyToManyField(User, related_name='chairPerson', default=None,null=True, blank=True)
+    programCoordinator = models.ManyToManyField(User, related_name='programCoordinator_events', default=None,null=True, blank=True)
 
 class Gallery(models.Model):
     image = models.ImageField(upload_to="images/")

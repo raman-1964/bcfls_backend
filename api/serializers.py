@@ -17,9 +17,9 @@ class UserSerializer(serializers.ModelSerializer):
         fields="__all__"
 
 class NewsEventsSerializer(serializers.ModelSerializer):
-    keynoteSpeaker = UserSerializer()
-    programCoordinator = UserSerializer()
-    chairPerson = UserSerializer()
+    keynoteSpeaker = UserSerializer(many=True)
+    programCoordinator = UserSerializer(many=True)
+    chairPerson = UserSerializer(many=True)
     class Meta:
         model=NewsEvents
         fields="__all__"
