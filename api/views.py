@@ -37,25 +37,34 @@ class NewsEventsViewSet(APIView):
 class OpportunitiesViewSet(APIView):
     def post(self, request):
         serializer = OpportunitiesSerializer(data=request.data)
-        # print(serializer.data, request.data)
-        print( request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({"status":"success","data":serializer.data})
         else :
             return Response({"status":"error","data":serializer.errors})
-
+        
 class GalleryViewSet(APIView):
-    def get(self, request):
-        if 'is_home_page' in request.query_params:
-            if request.query_params['is_home_page'].lower() == 'true':
-                try:
-                    item = Gallery.objects.filter(is_home_page=True)
-                    serializer = GallerySerializer(item, context={'request': request}, many=True)
-                    return Response({"status": "success", "data": serializer.data})
-                except Gallery.DoesNotExist:
-                    return Response({"status": "error", "message": "No Gallery with is_home_page=True found"})
-        else:
-            item = Gallery.objects.all()
-            serializer = GallerySerializer(item, context={'request':request} ,many=True)
-            return Response({"status":"success","data":serializer.data})
+    def get(self, request): 
+        queryset = Gallery.objects.all()  
+        is_home_page_value = request.query_params.get('is_home_page')
+        if is_home_page_value is not None:
+            is_home_page_bool = is_home_page_value.lower() == 'true'
+            queryset = queryset.filter(is_home_page=is_home_page_bool)
+        serializer = GallerySerializer(queryset, context={'request': request}, many=True)
+        return Response({"status": "success", "data": serializer.data})
+
+
+# class GalleryViewSet(APIView):
+#     def get(self, request):
+#         if 'is_home_page' in request.query_params:
+#             if request.query_params['is_home_page'].lower() == 'true':
+#                 try:
+#                     item = Gallery.objects.filter(is_home_page=True)
+#                     serializer = GallerySerializer(item, context={'request': request}, many=True)
+#                     return Response({"status": "success", "data": serializer.data})
+#                 except Gallery.DoesNotExist:
+#                     return Response({"status": "error", "message": "No Gallery with is_home_page=True found"})
+#         else:
+#             item = Gallery.objects.all()
+#             serializer = GallerySerializer(item, context={'request':request} ,many=True)
+#             return Response({"status":"success","data":serializer.data})
