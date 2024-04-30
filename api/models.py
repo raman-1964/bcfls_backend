@@ -48,3 +48,6 @@ class Opportunities(models.Model):
     institute = models.CharField(max_length=500, blank=False)
     email = models.EmailField(max_length=254, blank=False)
     phone = models.CharField(max_length=25, blank=False)
+
+class NewsLetter(models.Model):
+    email = models.EmailField(max_length=254, blank=False)

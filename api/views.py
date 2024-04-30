@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from .models import Banner,User,NewsEvents,Opportunities,Gallery
-from .serializers import BannerSerializer,UserSerializer,NewsEventsSerializer,OpportunitiesSerializer,GallerySerializer
+from .serializers import BannerSerializer,UserSerializer,NewsEventsSerializer,NewsLetterSerializer,OpportunitiesSerializer,GallerySerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -53,18 +53,12 @@ class GalleryViewSet(APIView):
         serializer = GallerySerializer(queryset, context={'request': request}, many=True)
         return Response({"status": "success", "data": serializer.data})
 
-
-# class GalleryViewSet(APIView):
-#     def get(self, request):
-#         if 'is_home_page' in request.query_params:
-#             if request.query_params['is_home_page'].lower() == 'true':
-#                 try:
-#                     item = Gallery.objects.filter(is_home_page=True)
-#                     serializer = GallerySerializer(item, context={'request': request}, many=True)
-#                     return Response({"status": "success", "data": serializer.data})
-#                 except Gallery.DoesNotExist:
-#                     return Response({"status": "error", "message": "No Gallery with is_home_page=True found"})
-#         else:
-#             item = Gallery.objects.all()
-#             serializer = GallerySerializer(item, context={'request':request} ,many=True)
-#             return Response({"status":"success","data":serializer.data})
+class NewsLetterViewSet(APIView):
+    def post(self, request):
+        serializer = NewsLetterSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status":"success","data":serializer.data})
+        else :
+            return Response({"status":"error","data":serializer.errors})
+      

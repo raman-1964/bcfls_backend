@@ -11,5 +11,6 @@ urlpatterns = [
     path('banner/', BannerViewSet.as_view()),
     path('news-event/', NewsEventsViewSet.as_view()),
     path('opportunities/', OpportunitiesViewSet.as_view()),
-    path('gallery/', GalleryViewSet.as_view())
+    path('gallery/', GalleryViewSet.as_view()),
+    path('news-letter/', GalleryViewSet.as_view())
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Banner,User,NewsEvents,Opportunities,Gallery
+from .models import Banner,User,NewsEvents,Opportunities,Gallery,NewsLetter
 
 class BannerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +44,7 @@ class GallerySerializer(serializers.ModelSerializer):
         photo_url = obj.fingerprint.url
         return request.build_absolute_uri(photo_url)
     
+class NewsLetterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=NewsLetter
+        fields="__all__"
