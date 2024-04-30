@@ -1,5 +1,10 @@
 from django.urls import path
+from django.contrib import admin
 from .views import BannerViewSet,UserViewSet,NewsEventsViewSet,OpportunitiesViewSet,GalleryViewSet
+
+admin.site.site_header = "IRFPS Admin"
+admin.site.site_title = "IRFPS Admin Portal"
+admin.site.index_title = "Welcome to India Research For Policy Studies Portal"
 
 urlpatterns = [
     path('user/', UserViewSet.as_view()),

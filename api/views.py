@@ -28,10 +28,10 @@ class NewsEventsViewSet(APIView):
             serializer = NewsEventsSerializer(item, context={'request':request} ,many=True)
             return Response({"status":"success","data":serializer.data})
         else :
-            querySet = NewsEvents.objects.all()
+            queryset = NewsEvents.objects.all()
             if 'is_home_page' in request.query_params:
                 queryset = queryset.filter(is_home_page=request.query_params['is_home_page'])
-            serializer = NewsEventsSerializer(querySet, context={'request': request}, many=True)
+            serializer = NewsEventsSerializer(queryset, context={'request': request}, many=True)
             return Response({"status": "success", "data": serializer.data})
 
 class OpportunitiesViewSet(APIView):
