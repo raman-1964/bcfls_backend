@@ -22,17 +22,14 @@ class UserViewSet(APIView):
         return Response({"status":"success","data":serializer.data})
 
 class NewsEventsViewSet(APIView):
-    def get(self, request, id=None):
-        if id :
-            item = NewsEvents.objects.get(id=id)
-            serializer = NewsEventsSerializer(item, context={'request':request} ,many=True)
-            return Response({"status":"success","data":serializer.data})
-        else :
-            queryset = NewsEvents.objects.all()
-            if 'is_home_page' in request.query_params:
-                queryset = queryset.filter(is_home_page=request.query_params['is_home_page'])
-            serializer = NewsEventsSerializer(queryset, context={'request': request}, many=True)
-            return Response({"status": "success", "data": serializer.data})
+    def get(self, request):
+        queryset = NewsEvents.objects.all()
+        if 'is_home_page' in request.query_params:
+            queryset = queryset.filter(is_home_page=request.query_params['is_home_page'])
+        if 'id' in request.query_params:
+            queryset = queryset.filter(id=request.query_params['id'])
+        serializer = NewsEventsSerializer(queryset, context={'request': request}, many=True)
+        return Response({"status": "success", "data": serializer.data})
 
 class OpportunitiesViewSet(APIView):
     def post(self, request):

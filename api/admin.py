@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Opportunities,Banner,Gallery,NewsEvents,User
+from .models import Opportunities,Banner,Gallery,NewsEvents,User,NewsLetter
 
 # Register your models here.
 @admin.register(Opportunities)
@@ -21,3 +21,7 @@ class NewsEventsModal(admin.ModelAdmin):
 @admin.register(User)
 class UserModal(admin.ModelAdmin):
     list_display = ['id','name','title']
+
+@admin.register(NewsLetter)
+class NewsLetterModal(admin.ModelAdmin):
+    list_display = ['email']
