@@ -4,13 +4,17 @@ from django.db import models
 class Banner(models.Model):
     image = models.ImageField(upload_to="images/")
     title = models.CharField(max_length=500)
-      
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return self.title
 
 class User(models.Model):
     name = models.CharField(max_length=50)
     title = models.CharField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
       
     def __str__(self):
         return self.name
@@ -35,6 +39,8 @@ class NewsEvents(models.Model):
     keynoteSpeaker = models.ManyToManyField(User, related_name='keynoteSpeaker', default=None, blank=True)
     chairPerson = models.ManyToManyField(User, related_name='chairPerson', default=None, blank=True)
     programCoordinator = models.ManyToManyField(User, related_name='programCoordinator_events', default=None, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
@@ -42,12 +48,18 @@ class NewsEvents(models.Model):
 class Gallery(models.Model):
     image = models.ImageField(upload_to="images/")
     is_home_page = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class Opportunities(models.Model):
     name = models.CharField(max_length=500, blank=False)
     institute = models.CharField(max_length=500, blank=False)
     email = models.EmailField(max_length=254, blank=False)
     phone = models.CharField(max_length=25, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class NewsLetter(models.Model):
     email = models.EmailField(max_length=254, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
