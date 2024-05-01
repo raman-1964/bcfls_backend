@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib import admin
-from .views import BannerViewSet,UserViewSet,NewsEventsViewSet,OpportunitiesViewSet,GalleryViewSet
+from .views import BannerViewSet,UserViewSet,NewsEventsViewSet,OpportunitiesViewSet,NewsLetterViewSet,GalleryViewSet
 
 admin.site.site_header = "IRFPS Admin"
 admin.site.site_title = "IRFPS Admin Portal"
@@ -12,5 +12,5 @@ urlpatterns = [
     path('news-event/', NewsEventsViewSet.as_view()),
     path('opportunities/', OpportunitiesViewSet.as_view()),
     path('gallery/', GalleryViewSet.as_view()),
-    path('news-letter/', GalleryViewSet.as_view())
+    path('news-letter/', NewsLetterViewSet.as_view())
 ]
