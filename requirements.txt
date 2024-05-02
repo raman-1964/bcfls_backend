@@ -185,3 +185,7 @@ yarl
 youtube-dl 
 youtube-transcript-api 
 yt-dlp 
+dj-database-url
+django-database-url
+gunicorn
+psycopg2

@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,14 +79,14 @@ WSGI_APPLICATION = 'bcfls_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bcfls',
-        'USER': 'root',
-        'PASSWORD': 'raman@123',
-        'HOST':  'localhost',
-    }
+# DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'bcfls',
+    #     'USER': 'root',
+    #     'PASSWORD': 'raman@123',
+    #     'HOST':  'localhost',
+    # }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
     #     'NAME': 'bcfls',
@@ -94,6 +95,9 @@ DATABASES = {
     #     'HOST': '127.0.0.1',
     #     'PORT': '',
     # }
+# }
+DATABASES = {
+    'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 
